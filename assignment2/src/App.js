@@ -26,14 +26,14 @@ const App = () => {
   },[]);
 
   const changeDocSelect = async (id) => {
-    if (unsavedDoc && unsavedDoc.id !== id) {
+    if (unsavedDoc) {
       try {
         await axios.post("http://localhost:8888/saveDoc", unsavedDoc);
       } catch (error) {
         console.error("Error saving doc:", error);
       }
     }
-    const selected = doclist.find(doc => doc.id == id);
+    const selected = doclist.find(doc => doc.id === id);
     setSelectedDoc(selected);
     setUnsavedDoc(selected);
   };

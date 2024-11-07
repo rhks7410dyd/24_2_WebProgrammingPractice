@@ -8,7 +8,7 @@ const MainContent = ({selectedDoc, setUnsaveDoc}) => {
 
   useEffect(() => {
     if (selectedDoc) {
-      setFormData({id:selectedDoc.id, title: selectedDoc.title, content: selectedDoc.content });
+      setFormData({title: selectedDoc.title, content: selectedDoc.content });
     }
   }, [selectedDoc]);
 
@@ -20,7 +20,7 @@ const MainContent = ({selectedDoc, setUnsaveDoc}) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex-grow bg-white px-[15%] pt-16">
+    <form className="flex-grow bg-white px-[15%] pt-16">
       {selectedDoc ? (
 
         <>
