@@ -1,36 +1,70 @@
-import React from "react";
+import React,{useEffect,useState} from "react";
 
-const Sidebar = () => (
-  <div className="bg-gray-100 p-2 h-full min-w-[120px] max-w-[232px]">
-    {/* User Info Section */}
-    <div className="flex items-center justify-between p-3 mb-4 rounded-md">
-      <div className="flex items-center">
-        <img src={'./profile.jpg'} alt="Profile Pic" className="rounded-full mr-2" style={{ width: '24px', height: '24px' }} />
-        <div className="text-gray-800">WebP의 ...</div>
+const INF = 9879654321;
+
+const Sidebar = ({doclist, selectedDoc, clickotherDoc}) => {
+  const [loading, setLoading] = useState();
+
+  const emtpyfunc = () => (
+    console.log("This is empty func. I don't implement already.")
+  )
+
+  const gotothisdoc = (id) => {
+    console.log("gotothidoc",id);
+    clickotherDoc(id);
+  }
+    
+  const addnewdoc = (num) => (
+    console.log("addnewdoc",num)
+  );
+
+  return(
+    <div className="bg-gray-100 p-2 h-full min-w-[120px] max-w-[232px]">
+      <div className="flex items-center justify-between p-3 mb-4 rounded-md">
+        <div className="flex items-center">
+          <img src={'./profile.jpg'} alt="Profile Pic" className="rounded-full mr-2" style={{ width: '24px', height: '24px' }} />
+          <div className="text-gray-800">WebP의 ...</div>
+        </div>
+        <EditIcon />
       </div>
-      <EditIcon />
+
+      <div className="flex flex-col space-y-1">
+        <SidebarItem icon={<SearchIcon />} text="Search" id={INF} selid={INF-1} onClick={() => emtpyfunc()}/>
+        <SidebarItem icon={<HomeIcon />} text="Home" id={INF} selid={INF-1} onClick={() => emtpyfunc()}/>
+      </div>
+
+
+      <div className="mt-4 text-sm text-gray-500">Private</div>
+      <div className="flex flex-col space-y-1 mt-2">
+        {loading ? (
+          <span>Loading...</span>
+        ) : (
+          doclist.map(({id, title, content}) => (
+            <SidebarItem key={id} icon={<DocIcon/>} text={title} id={id} selid={selectedDoc.id} onClick={() => gotothisdoc(id)
+            }/>
+          ))
+        )}
+        <AddSidebarItem icon={<DocIcon/>} text = "New Page" onClick={() => addnewdoc(doclist.length)} />
+      </div>
     </div>
 
-    {/* Menu Section */}
-    <div className="flex flex-col space-y-1">
-      <SidebarItem icon={<SearchIcon />} text="Search" />
-      <SidebarItem icon={<HomeIcon />} text="Home" />
-    </div>
+  );
+};
 
-    {/* Private Section */}
-    <div className="mt-4 text-sm text-gray-500">Private</div>
-    <div className="flex flex-col space-y-1 mt-2">
-      <SidebarItem icon={<DocIcon />} text="Assignment 1"/>
-      <SidebarItem icon={<DocIcon />} text="빠른 메모" />
-      <SidebarItem icon={<DocIcon />} text="Journal" />
-      <SidebarItem icon={<DocIcon />} text="New page" />
-    </div>
+const SidebarItem = ({ icon, text, onClick, id, selid }) => (
+  <div
+    className={`flex items-center p-1 rounded-md hover:bg-gray-200 ${id === selid ? 'bg-gray-300' : ''}`}
+    onClick={onClick}
+  >
+    <div className="flex items-center h-6 w-6 mr-2">{icon}</div>
+    <span className="text-gray-800 font-semibold">{text}</span>
   </div>
 );
 
-const SidebarItem = ({ icon, text, isHighlighted }) => (
+const AddSidebarItem = ({ icon, text, onClick }) => (
   <div
-    className={`flex items-center p-1 rounded-md hover:bg-gray-300`}
+    className={`flex items-center p-1 rounded-md hover:bg-gray-200`}
+    onClick={onClick}
   >
     <div className="flex items-center h-6 w-6 mr-2">{icon}</div>
     <span className="text-gray-800 font-semibold">{text}</span>
