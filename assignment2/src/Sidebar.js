@@ -1,7 +1,7 @@
 import React from "react";
 
 const Sidebar = () => (
-  <div className="bg-gray-100 p-2 h-full min-w-[150px] max-w-[400px]">
+  <div className="bg-gray-100 p-2 h-full min-w-[120px] max-w-[232px]">
     {/* User Info Section */}
     <div className="flex items-center justify-between p-3 mb-4 rounded-md">
       <div className="flex items-center">
